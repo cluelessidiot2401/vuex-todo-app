@@ -17,16 +17,17 @@
 </template>
 
 <script>
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
 export default {
   name: "Todos",
-  setup() {
+  async setup() {
     const store = useStore();
-    onMounted(() => {
-      // console.log("Mounted!");
-      store.dispatch("Todos/fetchTodoList");
-    });
+    await store.dispatch("Todos/fetchTodoList");
+    // onMounted(() => {
+    //   // console.log("Mounted!");
+    //   await store.dispatch("Todos/fetchTodoList");
+    // });
     const allTodos = computed(() => store.state.Todos.todos);
     function toggleCompletion(todo) {
       const updatedTodo = {
@@ -86,5 +87,11 @@ export default {
   margin: 0 0.5rem;
   align-self: center;
   cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .todo {
+    border-radius: 1rem;
+  }
 }
 </style>
